@@ -1,0 +1,15 @@
+version: "3.8"
+services:
+  nextjs-deals-ecomerce-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: node:16-alpine
+    container_name: "nextjs-deals-ecomerce-test"
+    restart: always
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
+    ports:
+      - 3000:3000

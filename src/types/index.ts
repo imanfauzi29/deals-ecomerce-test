@@ -1,0 +1,6 @@
+export type { TProducts } from "@/types/products.types"
+export type { TSideMenuItem } from "@/types/sidemenu.types"
+export type { queryParams } from "@/types/params.types"
+export type { TCarts } from "@/types/carts.types"
+export type { TUsers } from "@/types/users.types"
+export type { TResponse } from "@/types/responses.types"

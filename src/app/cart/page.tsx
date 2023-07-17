@@ -1,13 +1,14 @@
-import { ProductTable } from "@/components"
+import { CartTable } from "@/components"
+import { useCallback } from "react"
 
-export default async function Home() {
+export default function Page() {
   return (
     <>
       <div>
         <div className="flex justify-between w-full mb-5">
           <h1 className="font-semibold text-xl">Product</h1>
         </div>
-        <ProductTable />
+        <CartTable />
       </div>
     </>
   )
