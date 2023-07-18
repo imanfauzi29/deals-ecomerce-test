@@ -1,8 +1,8 @@
 "use client"
-import { createColumnHelper } from "@tanstack/react-table"
+import { ColumnDef } from "@tanstack/react-table"
 import { TCarts, TUsers } from "@/types"
 import { getUserById } from "@/services"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { getCartById } from "@/services/carts"
 import { TCartProduct } from "@/types/carts.types"
 import { Table, TableSkeleton, TextSkeleton } from "@/components"
@@ -11,35 +11,46 @@ const CartDetailTable = ({ id }: { id: string }) => {
   const [data, setData] = useState<TCarts>()
   const [users, setUsers] = useState<TUsers>()
 
-  const columnHelper = createColumnHelper<TCartProduct>()
-
-  const columns = [
-    columnHelper.accessor("id", {
-      id: "id",
-      header: "#",
-    }),
-    columnHelper.accessor("title", {
-      id: "title",
-      header: "Product name",
-    }),
-    columnHelper.accessor("price", {
-      id: "price",
-      header: "Price",
-    }),
-    columnHelper.accessor("quantity", {
-      id: "quantity",
-      header: "Quantity",
-    }),
-    columnHelper.accessor("discountedPrice", {
-      id: "discountedPrice",
-      header: "Discount Price",
-    }),
-    columnHelper.accessor("discountPercentage", {
-      id: "discountPercentage",
-      header: "Discount Percentage",
-    }),
-    columnHelper.accessor("total", { id: "total", header: "Total" }),
-  ]
+  const columns = useMemo<ColumnDef<TCartProduct>[]>(
+    () => [
+      {
+        id: "id",
+        accessorKey: "id",
+        header: "#",
+      },
+      {
+        id: "title",
+        accessorKey: "title",
+        header: " Product name",
+      },
+      {
+        id: "price",
+        accessorKey: "price",
+        header: "Price",
+      },
+      {
+        id: "quantity",
+        accessorKey: "quantity",
+        header: "Quantity",
+      },
+      {
+        id: "discountedPrice",
+        accessorKey: "discountedPrice",
+        header: "Discounted price",
+      },
+      {
+        id: "discountPercentage",
+        accessorKey: "discountPercentage",
+        header: "Discount percentage",
+      },
+      {
+        id: "total",
+        accessorKey: "total",
+        header: "Total",
+      },
+    ],
+    []
+  )
 
   useEffect(() => {
     getTableData()

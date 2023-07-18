@@ -1,51 +1,59 @@
 "use client"
 
-import { createColumnHelper } from "@tanstack/react-table"
+import { ColumnDef } from "@tanstack/react-table"
 import Table from "../Table"
 import { TCarts } from "@/types"
 import { getCarts } from "@/services"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import { TableSkeleton } from "../skeletons"
 
 const CartTable = () => {
   const [data, setData] = useState<TCarts[]>([])
 
-  const columnHelper = createColumnHelper<TCarts>()
-
-  const columns = [
-    columnHelper.accessor("id", {
-      id: "id",
-      header: "#",
-    }),
-    columnHelper.accessor("userId", {
-      id: "userId",
-      header: "User ID",
-    }),
-    columnHelper.accessor("totalProducts", {
-      id: "totalProducts",
-      header: "Total Products",
-    }),
-    columnHelper.accessor("totalQuantity", {
-      id: "totalQuantity",
-      header: "Total Quantity",
-    }),
-    columnHelper.accessor("discountTotal", {
-      id: "discountTotal",
-      header: "Total Discount",
-    }),
-    columnHelper.accessor("total", {
-      id: "total",
-      header: "Total",
-    }),
-    columnHelper.accessor("id", {
-      id: "id",
-      header: "Actions",
-      cell(props) {
-        return <Link href={`/cart/${props.getValue()}`}>Detail</Link>
+  const columns = useMemo<ColumnDef<TCarts>[]>(
+    () => [
+      {
+        id: "id",
+        accessorKey: "id",
+        header: "#",
       },
-    }),
-  ]
+      {
+        id: "userId",
+        accessorKey: "userId",
+        header: " User ID",
+      },
+      {
+        id: "totalProducts",
+        accessorKey: "totalProducts",
+        header: "Total Product",
+      },
+      {
+        id: "totalQuantity",
+        accessorKey: "totalQuantity",
+        header: "Total Quantity",
+      },
+      {
+        id: "discountTotal",
+        accessorKey: "discountTotal",
+        header: "Discount Total",
+      },
+      {
+        id: "total",
+        accessorKey: "total",
+        header: "Total",
+      },
+      {
+        id: "action",
+        accessorKey: "id",
+        header: "Action",
+        cell(props) {
+          return <Link href={`/cart/${props.getValue()}`}>Detail</Link>
+        },
+      },
+    ],
+    []
+  )
 
   useEffect(() => {
     getTableData()

@@ -1,43 +1,50 @@
 "use client"
 
-import { createColumnHelper } from "@tanstack/react-table"
+import { ColumnDef, createColumnHelper } from "@tanstack/react-table"
 import Table from "../Table"
 import { TProducts } from "@/types"
 import { getProducts } from "@/services"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useMemo } from "react"
 import { TableSkeleton } from "../skeletons"
 
 const ProductTable = () => {
   const [data, setData] = useState<TProducts[]>([])
 
-  const columnHelper = createColumnHelper<TProducts>()
-
-  const columns = [
-    columnHelper.accessor("id", {
-      id: "id",
-      header: "#",
-    }),
-    columnHelper.accessor("title", {
-      id: "title",
-      header: "Product name",
-    }),
-    columnHelper.accessor("brand", {
-      id: "brand",
-      header: "Brand",
-    }),
-    columnHelper.accessor("price", {
-      id: "price",
-      header: "Price",
-    }),
-    columnHelper.accessor("stock", {
-      id: "stock",
-      header: "Stock",
-    }),
-    columnHelper.accessor("category", {
-      id: "category",
-      header: "Category",
-    }),
-  ]
+  const columns = useMemo<ColumnDef<TProducts>[]>(
+    () => [
+      {
+        id: "id",
+        accessorKey: "id",
+        header: "#",
+      },
+      {
+        id: "title",
+        accessorKey: "title",
+        header: "Title",
+      },
+      {
+        id: "brand",
+        accessorKey: "brand",
+        header: "Brand",
+      },
+      {
+        id: "price",
+        accessorKey: "price",
+        header: "Price",
+      },
+      {
+        id: "stock",
+        accessorKey: "stock",
+        header: "Stock",
+      },
+      {
+        id: "category",
+        accessorKey: "category",
+        header: "Category",
+      },
+    ],
+    []
+  )
 
   useEffect(() => {
     getTableData()
